@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+		<meta name="format-detection" content="telephone=no">
+   	 	<meta name="apple-mobile-web-app-capable" content="yes" >
+   	 	<meta name="apple-mobile-web-app-title" content="Farm Control">
+   	 	<meta name="application-name" content="Farm Control">
+   	 	<link rel="apple-touch-icon" sizes="72x72" href="images/appIcons/apple-touch-icon-72x72.png">
+	    <link rel="apple-touch-icon" sizes="114x114" href="images/appIcons/apple-touch-icon-114x114.png">
+	    <link rel="apple-touch-icon" href="images/appIcons/apple-touch-icon-57x57.png">
+	    <link rel="apple-touch-startup-image" href="images/appIcons/startup-iPad-portrait.jpg">
+
+	    <!-- iPhone Generico -->
+	    <link href="images/appIcons/startup-iphone.jpg" media="screen" rel="apple-touch-startup-image">
+	    <link href="images/appIcons/apple-touch-icon-57x57.png" media="screen" rel="apple-touch-icon-precomposed"> 
+	    <link href="images/appIcons/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed">
+
+	    <!-- iPhone -->
+	    <link href="images/appIcons/startup-iphone.jpg" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
+	    <link href="images/appIcons/apple-touch-icon-57x57.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-icon-precomposed"> 
+	    <link href="images/appIcons/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed">
+
+	    <!-- iPhone (Retina) -->
+	    <link href="images/appIcons/startup-iphone4.jpg" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+	     <link href="images/appIcons/apple-touch-icon-114x114.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-icon-precomposed"> 
+	    <link href="images/appIcons/apple-touch-icon-114x114.png" sizes="114x114" rel="apple-touch-icon-precomposed">
+
+	    <!-- iPhone 5 -->
+	    <link href="images/appIcons/startup-iphone4.jpg" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+	     <link href="images/appIcons/apple-touch-icon-114x114.png"  media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-icon-precomposed"> 
+	    <link href="images/appIcons/apple-touch-icon-114x114.png" sizes="114x114" rel="apple-touch-icon-precomposed">
+
+	    <!-- iPad Portrait -->
+	    <link href="images/appIcons/startup-iPad-portrait.jpg" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
+	     <link href="images/appIcons/apple-touch-icon-72x72.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-icon-precomposed"> 
+	    <link href="images/appIcons/apple-touch-icon-72x72.png" sizes="72x72" rel="apple-touch-icon-precomposed">
+
+	    <!-- iPad Landscape -->
+	    <link href="images/appIcons/startup-iPad-landscape.jpg" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
+
+	    <!-- iPad Portrait (Retina) -->
+	    <link href="images/appIcons/startup-iPad-portrait.jpg" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+	     <link href="images/appIcons/apple-touch-icon-144x144.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-icon-precomposed"> 
+	    <link href="images/appIcons/apple-touch-icon-144x144.png" sizes="144x144" rel="apple-touch-icon-precomposed">
+
+	    <!-- iPad Landscape (Retina) -->
+	    <link href="images/appIcons/startup-iPad-landscape.jpg" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="css/app.css">
+		<script src="libs/zepto.js"></script>
+		<title>Farm Control</title>
+	</head>
+	<body>
+		<div class="loader"><img class="icon" src="images/loading.gif"></div>
+		<header class="header">
+			<span class="title font300">Farm Control</span>
+		</header>
+		<div class="container">
+			<div class="sectionTitle">
+				<span>Ambiente Interno:</span>
+			</div>
+			<section class="box internal">
+				<div class="dataColumn">
+					<p class="temperature">22.0C</p>
+					<p class="humidity">umidade: 55%</p>
+				</div>
+				<div class="dataColumn">
+					<table class="table" width="100%" align="center" cellspacing="0" cellpadding="0">
+						<tr>
+							<th>Temperatura</th>
+							<th>Umidade</th>
+						</tr>
+						<tr>
+							<td>20.02C</td>
+							<td>87.89%</td>
+						</tr>
+						<tr>
+							<td>20.02C</td>
+							<td>87.89%</td>
+						</tr>
+						<tr>
+							<td>20.02C</td>
+							<td>87.89%</td>
+						</tr>
+					</table>
+				</div>
+			</section>
+
+			<div class="sectionTitle">
+				<span>Ambiente Interno:</span>
+			</div>
+			<section class="box external">
+				<div class="dataColumn">
+					<p class="temperature">22.0C</p>
+					<p class="humidity">umidade: 55%</p>
+				</div>
+				<div class="dataColumn">
+					<table class="table" width="100%" align="center" cellspacing="0" cellpadding="0">
+						<tr>
+							<th>Temperatura</th>
+							<th>Umidade</th>
+						</tr>
+						<tr>
+							<td>20.02C</td>
+							<td>87.89%</td>
+						</tr>
+						<tr>
+							<td>20.02C</td>
+							<td>87.89%</td>
+						</tr>
+						<tr>
+							<td>20.02C</td>
+							<td>87.89%</td>
+						</tr>
+					</table>
+				</div>
+			</section>
+			<button class="btnRefresh">ATUALIZAR DADOS</button>
+			<footer class="footer">
+				<img src="images/cefsa_logo.jpg" class="logo">
+				<p><b>Desenvolvido por: </b>Masanori Iha | Rodrigo Nappi</p>
+				<p><b>Professor orientador: </b>Fábio Cabrini</p>
+			</footer>
+		</div>
+		<script type="text/javascript" src="js/app.js"></script>
+		<script type="text/javascript">
+
+		</script>
+	</body>
+</html>

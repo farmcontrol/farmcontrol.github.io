@@ -1,15 +1,14 @@
+#include <SoftwareSerial.h>
 #include <DHT.h>
 #include <LiquidCrystal.h>
 
+float outHumidity = 0, outTemperature = 0, inTemperature = 0, inHumidity = 0;
 
 // Define o pino analogico para ligado do DH21
 DHT dht(A1,DHT21);
 
 // Define os pinos que serão utilizados na ligação do LCD
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
-
-float outHumidity = 0, outTemperature = 0; 
-float inHumidity = 0, inTemperature = 0;
    
 void setup(){
   Serial.begin(9600); // inicializa a comunicação serial
@@ -22,16 +21,12 @@ void setup(){
 }
 
 void loop(){
-  inHumidity = dht.readHumidity();
+  inHumidity = analogRead(A2);
+  inHumidity = map(inHumidity, 0, 1023, 0, 100);
   inTemperature = dht.readTemperature();
 
   outHumidity = dht.readHumidity();
   outTemperature = dht.readTemperature();
-  
-  Serial.print("Temperatra: ");
-  Serial.print(outTemperature);
-  Serial.print("| Humidade: ");
-  Serial.println(outHumidity);
 
   // Exibe os dados referentes ao clima INTERNO
   lcd.setCursor(4,0);
@@ -42,8 +37,13 @@ void loop(){
   lcd.print("|");
   lcd.setCursor(10,0);
   lcd.print(inHumidity);
-  lcd.setCursor(14,0);
+  lcd.setCursor(15,0);
   lcd.print("%");
+  // console
+  Serial.print("Temperatra Interna: ");
+  Serial.print(inTemperature);
+  Serial.print("| Humidade Interna: ");
+  Serial.println(inHumidity);
 
   // Exibe os dados referentes ao clima EXTERNO
   lcd.setCursor(4,1);
@@ -54,9 +54,14 @@ void loop(){
   lcd.print("|");
   lcd.setCursor(10,1);
   lcd.print(outHumidity);
-  lcd.setCursor(14,1);
+  lcd.setCursor(15,1);
   lcd.print("%");
+  // console
+  Serial.print("Temperatra Externa: ");
+  Serial.print(outTemperature);
+  Serial.print("| Humidade Externa: ");
+  Serial.println(outHumidity);
   
-  delay(10000);
+  delay(1000);
 }
 

@@ -42,6 +42,7 @@ html, body{
 }
 
 .header{
+	position: fixed;
 	width: 100%;
 	background-color: #cecece;
 	border-bottom: solid 1px #a0a0a0;
@@ -90,7 +91,8 @@ html, body{
 			padding-top: 5px;
 		}
 		.dataColumn .humidity{
-			font-size: 18px;
+			font-size: 16px;
+			font-weight: 600;
 			margin: 0;
 		}
 
@@ -104,7 +106,8 @@ html, body{
 		font-weight: 600;
 	}
 	.table td{
-		font-size: 16px
+		font-size: 14px;
+		font-weight: 600;
 	}
 
 .green{
@@ -127,7 +130,7 @@ html, body{
 
 .footer{
 	border-top: solid 1px #a0a0a0;
-	padding-top: 10px;
+	padding: 10px 0;
 	text-align: center;
 	font-size: 12px;
 }

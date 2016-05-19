@@ -7,6 +7,7 @@
    	 	<meta name="apple-mobile-web-app-capable" content="yes" >
    	 	<meta name="apple-mobile-web-app-title" content="Farm Control">
    	 	<meta name="application-name" content="Farm Control">
+
    	 	<link rel="apple-touch-icon" sizes="72x72" href="images/appIcons/apple-touch-icon-72x72.png">
 	    <link rel="apple-touch-icon" sizes="114x114" href="images/appIcons/apple-touch-icon-114x114.png">
 	    <link rel="apple-touch-icon" href="images/appIcons/apple-touch-icon-57x57.png">
@@ -53,12 +54,13 @@
 		<script src="libs/zepto.js"></script>
 		<title>Farm Control</title>
 	</head>
-	<body>
+	<body onload="initialize();">
 		<div class="loader"><img class="icon" src="images/loading.gif"></div>
 		<header class="header">
 			<span class="title font300">Farm Control</span>
 		</header>
 		<div class="container">
+			<section class="box dateTime"></section>
 			<div class="sectionTitle">
 				<span>Ambiente Interno:</span>
 			</div>
@@ -67,26 +69,7 @@
 					<p class="temperature">22.0C</p>
 					<p class="humidity">umidade: 55%</p>
 				</div>
-				<div class="dataColumn">
-					<table class="table" width="100%" align="center" cellspacing="0" cellpadding="0">
-						<tr>
-							<th>Temperatura</th>
-							<th>Umidade</th>
-						</tr>
-						<tr>
-							<td>20.02C</td>
-							<td>87.89%</td>
-						</tr>
-						<tr>
-							<td>20.02C</td>
-							<td>87.89%</td>
-						</tr>
-						<tr>
-							<td>20.02C</td>
-							<td>87.89%</td>
-						</tr>
-					</table>
-				</div>
+				<div class="dataColumn infosTable"></div>
 			</section>
 
 			<div class="sectionTitle">
@@ -97,37 +80,16 @@
 					<p class="temperature">22.0C</p>
 					<p class="humidity">umidade: 55%</p>
 				</div>
-				<div class="dataColumn">
-					<table class="table" width="100%" align="center" cellspacing="0" cellpadding="0">
-						<tr>
-							<th>Temperatura</th>
-							<th>Umidade</th>
-						</tr>
-						<tr>
-							<td>20.02C</td>
-							<td>87.89%</td>
-						</tr>
-						<tr>
-							<td>20.02C</td>
-							<td>87.89%</td>
-						</tr>
-						<tr>
-							<td>20.02C</td>
-							<td>87.89%</td>
-						</tr>
-					</table>
+				<div class="dataColumn infosTable">
 				</div>
 			</section>
 			<button class="btnRefresh">ATUALIZAR DADOS</button>
 			<footer class="footer">
 				<img src="images/cefsa_logo.jpg" class="logo">
-				<p><b>Desenvolvido por: </b>Masanori Iha | Rodrigo Nappi</p>
+				<p><b>Desenvolvido por: </b>Masanori Iha | Rafael Galani | Rodrigo Nappi</p>
 				<p><b>Professor orientador: </b>Fábio Cabrini</p>
 			</footer>
 		</div>
 		<script type="text/javascript" src="js/app.js"></script>
-		<script type="text/javascript">
-
-		</script>
 	</body>
 </html>

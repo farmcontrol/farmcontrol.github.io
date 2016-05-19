@@ -39,6 +39,7 @@ html, body{
 	position: relative;
 	margin: auto;
 	width: 95%;
+	padding-top: 65px;
 }
 
 .header{

@@ -63,6 +63,43 @@
 			<section class="box dateTime"></section>
 			<div class="sectionTitle">
 				<span>Ambiente Interno:</span>
+				
+				<div class='button-settings' id='intSettingsButton' style='float: right; display:inline'>
+					<img class='button-img' src='images/settings.png'/>
+				</div>
+				
+				<div id="modal-main-int">
+				  <div class="modal-content">
+				    <div class="modal-header">
+				      <span class="close">×</span>
+				      <h2 class='modal-title'>Configurações</h2>
+				    </div>
+				    <div class="modal-body">
+						<div class='first row'>
+							<label class='modal-label'>Temperatura mínima (°C):</label>
+							<input type='number' id='intMinTemp' onkeydown='return getInput(event)' class='modal-input' step="0.1"/>
+						</div>	
+
+						<div class='row'>	
+							<label class='modal-label'>Temperatura máxima (°C):</label>
+							<input type='number' id='intMaxTemp' onkeydown='return getInput(event)' class='modal-input' step="0.1"/>
+						</div>	
+
+						<div class='row'>	
+							<label class='modal-label'>Umidade mínima (%):</label>
+							<input type='number' id='intMinHumidity' onkeydown='return getInput(event)' class='modal-input' step="0.1"/>
+						</div>	
+
+						<div class='row'>
+							<label class='modal-label'>Umidade máxima (%):</label>
+							<input type='number' id='intMaxHumidity' onkeydown='return getInput(event)' class='modal-input' step="0.1"/>
+						</div>
+
+						<span id='errorMsg'></span>
+					</div>
+				    <div id='setInternal' class="modal-footer">OK</div>
+				  </div>
+				</div>
 			</div>
 			<section class="box internal">
 				<div class="dataColumn">
@@ -73,7 +110,43 @@
 			</section>
 
 			<div class="sectionTitle">
-				<span>Ambiente Interno:</span>
+				<span>Ambiente Externo:</span>
+				<div class='button-settings' id='extSettingsButton' style='float: right; display:inline'>
+					<img class='button-img' src='images/settings.png'/>
+				</div>
+				
+				<div id="modal-main-ext">
+				  <div class="modal-content">
+				    <div class="modal-header">
+				      <span class="close">×</span>
+				      <h2 class='modal-title'>Configurações</h2>
+				    </div>
+				    <div class="modal-body">
+						<div class='first row'>
+							<label class='modal-label'>Temperatura mínima (°C):</label>
+							<input type='number' id='extMinTemp' onkeydown='return getInput(event)' class='modal-input' step="0.1"/>
+						</div>	
+
+						<div class='row'>	
+							<label class='modal-label'>Temperatura máxima (°C):</label>
+							<input type='number' id='extMaxTemp' onkeydown='return getInput(event)' class='modal-input' step="0.1"/>
+						</div>	
+
+						<div class='row'>	
+							<label class='modal-label'>Umidade mínima (%):</label>
+							<input type='number' id='extMinHumidity' onkeydown='return getInput(event)' class='modal-input' step="0.1"/>
+						</div>	
+
+						<div class='row'>
+							<label class='modal-label'>Umidade máxima (%):</label>
+							<input type='number' id='extMaxHumidity' onkeydown='return getInput(event)' class='modal-input' step="0.1"/>
+						</div>
+
+						<span id='errorMsg'></span>
+					</div>
+				    <div id='setExternal' class="modal-footer">OK</div>
+				  </div>
+				</div>
 			</div>
 			<section class="box external">
 				<div class="dataColumn">

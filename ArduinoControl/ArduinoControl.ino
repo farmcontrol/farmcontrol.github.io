@@ -1,33 +1,74 @@
-#include <SoftwareSerial.h>
-#include <DHT.h>
 #include <LiquidCrystal.h>
+#include <DHT.h>
+#include <SoftwareSerial.h>
 
-float outHumidity = 0, outTemperature = 0, inTemperature = 0, inHumidity = 0;
-
-// Define o pino analogico para ligado do DH21
-DHT dht(A1,DHT21);
-
-// Define os pinos que serão utilizados na ligação do LCD
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
-   
-void setup(){
-  Serial.begin(9600); // inicializa a comunicação serial
-  lcd.begin(16, 2); // inicializa o LCD
+DHT dht(A1, DHT21);
+
+float outHumidity = 0, outTemperature = 0; 
+float inHumidity  = 0, inTemperature = 0;
+
+#define DEBUG true //Mostrar mensagens de output (debug)
+#define _baudrate 9600
+#define _rxpin 6
+#define _txpin 7
+SoftwareSerial esp8266(_rxpin, _txpin);
+
+//*-- IoT Informationw
+#define SSID "KIKA"
+#define PASS "UFABC2014"
+#define IP "184.106.153.149" // ThingSpeak IP Address: 184.106.153.149
+
+// GET /update?key=[THINGSPEA_KEY]&field1=[data 1]&field2=[data 2]...;
+String GET = "GET /update?key=FDKEA0YLYP6XTZJM";
+
+void setup() {
+  Serial.begin(_baudrate);
+  esp8266.begin(_baudrate);
+  lcd.begin(16, 2); //Inicializa o LCD
+  lcd.setCursor(0,0);
+  lcd.print("Carregando...");
+  dht.begin();
+  
+  sendData("AT\r\n", 3000, DEBUG);
+  delay(1000);
+
+  //Conecta à rede wireless
+  sendData("AT+CWJAP=\"KIKA\",\"UFABC2014\"\r\n", 2000, DEBUG);
+  delay(1000);
+
+  sendData("AT+CWMODE=1\r\n", 1000, DEBUG);
+  delay(1000);
+  
+  //Mostra o endereco IP
+  sendData("AT+CIFSR\r\n", 1000, DEBUG);
+  delay(1000);
+
+  //Configura para única conexão (0 = única, 1 = múltiplas)
+  sendData("AT+CIPMUX=0\r\n", 1000, DEBUG);
+  delay(1000);
+  
+}
+
+void loop() {
+  float inHumidityAnalog = dht.readHumidity();
+  delay(4000);
+  inHumidity = map(inHumidity, 0, 1023, 0, 100);
+  inTemperature = dht.readTemperature();
+  delay(4000);
+  outHumidity = dht.readHumidity();
+  delay(4000);
+  outTemperature = dht.readTemperature();
+  delay(4000);
+  Serial.print("Temperatra: ");
+  Serial.print(outTemperature);
+  Serial.print("| Humidade: ");
+  Serial.println(inHumidity);
+
   lcd.setCursor(0,0);
   lcd.print("INT:");
   lcd.setCursor(0,1);
   lcd.print("EXT:");
-  dht.begin();
-}
-
-void loop(){
-  inHumidity = analogRead(A2);
-  inHumidity = map(inHumidity, 0, 1023, 0, 100);
-  inTemperature = dht.readTemperature();
-
-  outHumidity = dht.readHumidity();
-  outTemperature = dht.readTemperature();
-
   // Exibe os dados referentes ao clima INTERNO
   lcd.setCursor(4,0);
   lcd.print(inTemperature);
@@ -37,13 +78,8 @@ void loop(){
   lcd.print("|");
   lcd.setCursor(10,0);
   lcd.print(inHumidity);
-  lcd.setCursor(15,0);
+  lcd.setCursor(14,0);
   lcd.print("%");
-  // console
-  Serial.print("Temperatra Interna: ");
-  Serial.print(inTemperature);
-  Serial.print("| Humidade Interna: ");
-  Serial.println(inHumidity);
 
   // Exibe os dados referentes ao clima EXTERNO
   lcd.setCursor(4,1);
@@ -54,14 +90,69 @@ void loop(){
   lcd.print("|");
   lcd.setCursor(10,1);
   lcd.print(outHumidity);
-  lcd.setCursor(15,1);
+  lcd.setCursor(14,1);
   lcd.print("%");
-  // console
-  Serial.print("Temperatra Externa: ");
-  Serial.print(outTemperature);
-  Serial.print("| Humidade Externa: ");
-  Serial.println(outHumidity);
-  
-  delay(1000);
+
+  String extTemp = String(outTemperature);
+  String extHum    = String(outHumidity);
+  String inTemp  = String(inTemperature);
+  String inHum     = String(inHumidity);
+
+  updateTS(extTemp, extHum, inTemp, inHum);
+  delay(1000); //
 }
 
+//Rotina para atualizar o thingspeak de acordo com strings parametrizadas...
+void updateTS(String extTemp, String extHum, String inTemp, String inHum){
+  
+  //Configurações do ESP 8266
+  String cmd = "AT+CIPSTART=\"TCP\",\"";//Configurando a conexão TCP
+  cmd += IP;
+  cmd += "\",80\r\n";
+
+  sendData(cmd, 2000, DEBUG);
+  delay(1000);
+  
+  
+
+  String getCommand = GET + "&field1=" + extTemp + "&field2=" + extHum + "&field3=" + inTemp +"&field4=" + inHum + "\r\n"; 
+
+  /*"Field 1" : "Temperatura Externa",
+    "Field 2" : "Umidade Externa",
+    "Field 3" : "Temperatura Interna",
+    "Field 4" : "Umidade Interna" */
+
+
+  //Query de GET para o thingspeak
+  //"&fieldN=" + "valor" (N = campo do channel)
+
+  cmd = "AT+CIPSEND=";
+  cmd += String(getCommand.length());
+  cmd += "\r\n"; //Montando tamanho da query para o módulo (necessário para enviar um GET pro thingspeak)
+
+  sendData(cmd, 2000, DEBUG);
+  delay(1000);   //Enviando tamanho da query para o módulo e esperando aprovação (">") 
+
+  sendData(getCommand, 2000, DEBUG); //Enviando comando de GET para o thingspeak
+  delay(20000);  //Tempo entre sincronizações no thingspeak
+}
+
+
+String sendData(String command, const int timeout, boolean debug){
+
+  //Enviar comandos para o módulo WiFi
+  String response = "";
+  esp8266.print(command);
+  long int time = millis();
+  while ((time + timeout) > millis()){
+    while (esp8266.available()){
+      //Rotina que lê os comandos, letra por letra.
+      char c = esp8266.read(); //Lendo a próxima letra do comando.
+      response += c; //Acumulando comando numa String para mostrar no output
+    }
+  }
+  if (debug){
+    Serial.print(response);
+  }
+  return response;
+}

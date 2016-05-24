@@ -3,7 +3,8 @@
 #include <SoftwareSerial.h>
 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
-DHT dht(A1, DHT21);
+DHT dht21(A0, DHT21);
+DHT dht11(A2, DHT11);
 
 float outHumidity = 0, outTemperature = 0; 
 float inHumidity  = 0, inTemperature = 0;
@@ -15,8 +16,8 @@ float inHumidity  = 0, inTemperature = 0;
 SoftwareSerial esp8266(_rxpin, _txpin);
 
 //*-- IoT Informationw
-#define SSID "KIKA"
-#define PASS "UFABC2014"
+#define SSID "RODRIGO"
+#define PASS "venussalamandra"
 #define IP "184.106.153.149" // ThingSpeak IP Address: 184.106.153.149
 
 // GET /update?key=[THINGSPEA_KEY]&field1=[data 1]&field2=[data 2]...;
@@ -28,13 +29,14 @@ void setup() {
   lcd.begin(16, 2); //Inicializa o LCD
   lcd.setCursor(0,0);
   lcd.print("Carregando...");
-  dht.begin();
+  dht21.begin();
+  dht11.begin();
   
   sendData("AT\r\n", 3000, DEBUG);
   delay(1000);
 
   //Conecta à rede wireless
-  sendData("AT+CWJAP=\"KIKA\",\"UFABC2014\"\r\n", 2000, DEBUG);
+  sendData("AT+CWJAP=\"Nappi\",\"nappi123\"\r\n", 2000, DEBUG);
   delay(1000);
 
   sendData("AT+CWMODE=1\r\n", 1000, DEBUG);
@@ -51,20 +53,27 @@ void setup() {
 }
 
 void loop() {
-  float inHumidityAnalog = dht.readHumidity();
-  delay(4000);
+  // umidade interna
+  inHumidity = analogRead(A1);
   inHumidity = map(inHumidity, 0, 1023, 0, 100);
-  inTemperature = dht.readTemperature();
-  delay(4000);
-  outHumidity = dht.readHumidity();
-  delay(4000);
-  outTemperature = dht.readTemperature();
-  delay(4000);
-  Serial.print("Temperatra: ");
-  Serial.print(outTemperature);
-  Serial.print("| Humidade: ");
+  // temperatura interna
+  inTemperature = dht11.readTemperature();
+
+  // umidade externa
+  outHumidity = dht21.readHumidity();
+  // temperatura externa
+  outTemperature = dht21.readTemperature();
+
+  Serial.print("Temperatra Interna: ");
+  Serial.print(inTemperature);
+  Serial.print("| Umidade Interna: ");
   Serial.println(inHumidity);
 
+  Serial.print("Temperatra Externa: ");
+  Serial.print(outTemperature);
+  Serial.print("| Umidade Externa: ");
+  Serial.println(outHumidity);
+  
   lcd.setCursor(0,0);
   lcd.print("INT:");
   lcd.setCursor(0,1);
@@ -99,7 +108,7 @@ void loop() {
   String inHum     = String(inHumidity);
 
   updateTS(extTemp, extHum, inTemp, inHum);
-  delay(1000); //
+  delay(60000); //
 }
 
 //Rotina para atualizar o thingspeak de acordo com strings parametrizadas...
